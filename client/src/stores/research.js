@@ -39,14 +39,25 @@ export const researchStore = defineStore({
                     console.log(err);
                 });
         },
-        getDetails(data) {
-            console.log(data);
-            this.research = data;
-            this.router.push(`/detailResearch/${data.id}`);
-            // researchStore
+        getDetails(id) {
+            // console.log(id, "ini stores");
+            axios({
+                method: "get",
+                url: `${this.serverUrl}/research/read/${id}`,
+                headers: {
+                    access_token: localStorage.access_token,
+                },
+            })
+                .then(({ data }) => {
+                    // console.log(data);
+                    this.research = data;
+                    this.router.push(`/detailResearch/${data.id}`);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
         postResearch(data) {
-            // console.log('ini create');
             axios({
                 method: "post",
                 url: this.serverUrl + "/research",
@@ -57,12 +68,26 @@ export const researchStore = defineStore({
             })
                 .then(({ data }) => {
                     console.log(data);
-                    this.router.push("/research");
+                    this.router.push("/");
                 })
                 .catch((err) => {
                     console.log(err);
                 });
-            // this.router.push('/')
+        },
+        getFile(file) {
+            // this.router.push(`/detailResearch/${file.id}`);
+            // this.router = this.serverUrl+`/${file.document}`
+            console.log("ini get File");
+
+            axios({
+                url: this.serverUrl + `/${file.document}`,
+            })
+                .then(({ data }) => {
+                    console.log(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
     },
 });

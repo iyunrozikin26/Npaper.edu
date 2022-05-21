@@ -2,15 +2,17 @@
     <div class="card row-4 m-2" style="width: 15rem">
         <figure>
             <blockquote class="blockquote row d-flex justify-content-center">
-                <p>{{ research.title }}</p>
+                <h6>{{ research.title }}</h6>
                 <img :src="research.User.Profile.image" class="card-img-top" style="width: 5rem" />
             </blockquote>
             <figcaption class="blockquote-footer">
-                <cite title="Source Title">by. {{ research.User.Profile.firstName + research.User.Profile.lastName }} - {{ research.User.Profile.university }}</cite>
+                <cite title="Source Title">by. {{ research.User.Profile.firstName }} {{ research.User.Profile.lastName }}</cite>
             </figcaption>
-            <figcaption class="blockquote-footer">abstract: {{ research.abstract }} <cite title="Source Title"></cite></figcaption>
+            <figcaption class="blockquote-footer">
+                <cite title="Source Title">{{ research.User.Profile.university }}</cite>
+            </figcaption>
         </figure>
-        <a href="#" class="btn btn-primary mb-2" @click.prevent="details(research)"><i class="fa fa-search"></i></a>
+        <a href="#" class="btn btn-primary mb-2" @click.prevent="details(research.id)"><i class="fa fa-search"></i></a>
         <!-- <a href="#" class="btn btn-primary" ><i class="fa fa-edit"></i></a> -->
     </div>
 </template>
@@ -27,9 +29,9 @@ export default {
     },
     methods: {
         ...mapActions(researchStore, ["getDetails"]),
-        details(research) {
-            // console.log(research);
-            this.getDetails(research)
+        details(researchId) {
+            // console.log(researchId);
+            this.getDetails(researchId);
         },
     },
 };

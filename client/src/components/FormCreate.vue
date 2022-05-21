@@ -22,15 +22,11 @@
         <div class="col-12">
             <label class="form-label">Location</label>
             <input v-model="location" type="text" class="form-control" placeholder="1234 Main St" />
-        </div>
-        <div class="col-md-6">
-            <label class="form-label">Upload</label>
+            <label class="form-label me-2 mt-4">Upload</label>
             <!-- document adalah nama column di DB -->
             <input @change="(e) => (document = e.target.files[0])" type="file" name="pdf" accept="pdf/*" />
         </div>
-        <div class="col-12 text-end me-5">
-            <button type="submit" class="btn btn-primary">save</button>
-        </div>
+        <button type="submit" class="btn btn-primary">save</button>
     </form>
 </template>
 
@@ -74,8 +70,8 @@ export default {
             formData.append("location", newResearch.location);
             formData.append("status", newResearch.status);
             formData.append("CategoryId", newResearch.CategoryId);
-            // console.log(newResearch);
-            this.postResearch(formData)
+            console.log(formData);
+            this.postResearch(formData);
         },
     },
     computed: {

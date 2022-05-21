@@ -1,8 +1,18 @@
 const Controller = require("../controllers/researchController");
 const { authentication, authorAccess } = require("../middlewares/auth");
+const multer = require("multer");
+const fileStorageEngine = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./upload");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "---" + file.originalname);
+    },
+});
+const upload = multer({ storage: fileStorageEngine });
 const researchRouter = require("express").Router();
 
-researchRouter.post("/", authentication, Controller.postResearch); // Create
+researchRouter.post("/", authentication, upload.single("document"), Controller.postResearch); // Create
 researchRouter.get("/", authentication, Controller.getAllResearch); // Read All
 researchRouter.get("/:researchId", authentication, Controller.researchByPk); // Read ByPk
 

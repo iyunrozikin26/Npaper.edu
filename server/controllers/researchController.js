@@ -22,7 +22,8 @@ class Controller {
             res.status(201).json(createResearch);
         } catch (error) {
             console.log(error);
-            res.status(error.status).json(error.message);
+            // console.log(error)
+            // res.status(error.status).json(error.message);
         }
     }
 
@@ -32,6 +33,7 @@ class Controller {
             // PAGINATION
             const option = {
                 include: [Category, { model: User, include: Profile }],
+                order: [["createdAt", "DESC"]],
             };
             const getResearchAll = await Research.findAll(option);
             res.status(200).json(getResearchAll);
@@ -42,59 +44,67 @@ class Controller {
 
     static async researchByPk(req, res, next) {
         try {
-            const getResearch = await Research.findByPk(searchId);
+            const { researchId } = req.params;
+            const getResearch = await Research.findOne({
+                where: { id: researchId },
+                include: [Category, { model: User, include: Profile }],
+            });
             if (!getResearch) throw { status: 404, message: "Research Not Found" };
             res.status(200).json(getResearch);
         } catch (error) {
-            res.status(error.status).json(error.message);
+            console.log(error);
+            // res.status(error.status).json(error.message);
         }
     }
 
     static async putResearch(req, res, next) {
         try {
-            const { searchId } = req.params;
-            const getResearch = await Research.findByPk(searchId);
-            if (!getResearch) throw { status: 404, message: "Research Not Found" };
+            const { researchId } = req.params;
+            // const getResearch = await Research.findByPk(researchId);
+            // if (!getResearch) throw { status: 404, message: "Research Not Found" };
             const updateResearch = await Research.update(req.body, {
-                where: { id: searchId },
+                where: { id: researchId },
                 returning: true,
             });
             res.status(200).json(updateResearch);
         } catch (error) {
-            res.status(error.status).json(error.message);
+            console.log(error);
+            // res.status(error.status).json(error.message);
         }
     }
 
     static async patchResearch(req, res, next) {
         try {
-            const { searchId } = req.params;
-            const getResearch = await Research.findByPk(searchId);
-            if (!getResearch) throw { status: 404, message: "Research Not Found" };
+            const { researchId } = req.params;
+            // const getResearch = await Research.findByPk(researchId);
+            // if (!getResearch) throw { status: 404, message: "Research Not Found" };
             const updateResearch = await Research.update(
                 { status: "uploaded" },
                 {
-                    where: { id: searchId },
+                    where: { id: researchId },
                     returning: true,
                 }
             );
             res.status(200).json(updateResearch);
         } catch (error) {
-            res.status(error.status).json(error.message);
+            console.log(error);
+            // res.status(error.status).json(error.message);
         }
     }
 
     static async deleteResearch(req, res, next) {
         try {
-            const { searchId } = req.params;
-            const getResearch = await Research.findByPk(searchId);
-            if (!getResearch) throw { status: 404, message: "Research Not Found" };
+            const { researchId } = req.params;
+            // const getResearch = await Research.findByPk(researchId);
+            // if (!getResearch) throw { status: 404, message: "Research Not Found" };
             const toDelete = await Research.destroy({
-                where: { id: searchId },
+                where: { id: researchId },
             });
 
-            res.status(200).json({ message: `Research with ${searchId} success to delete` });
+            res.status(200).json({ message: `Research with ${researchId} success to delete` });
         } catch (error) {
-            res.status(error.status).json(error.message);
+            console.log(error);
+            // res.status(error.status).json(error.message);
         }
     }
 }

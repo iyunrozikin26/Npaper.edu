@@ -14,6 +14,7 @@ import CardResearch from "../components/CardResearch.vue";
 import { mapActions, mapState } from "pinia";
 import { researchStore } from "../stores/research";
 
+
 export default {
     name: "HomeView",
     components: {
@@ -27,7 +28,7 @@ export default {
     },
     created() {
         this.findAllResearch();
-        this.thirdAPI();
+        // this.thirdAPI();
     },
 };
 </script>

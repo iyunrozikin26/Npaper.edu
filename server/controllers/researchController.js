@@ -30,11 +30,17 @@ class Controller {
     static async getAllResearch(req, res, next) {
         try {
             // FILTER
-            // PAGINATION
             const option = {
                 include: [Category, { model: User, include: Profile }],
                 order: [["createdAt", "DESC"]],
             };
+            if (req.query.byName) {
+                option.where = {
+                    title: { [Op.iLike]: `%${req.query.byName}%` },
+                };
+            }
+            console.log(option);
+            // PAGINATION
             const getResearchAll = await Research.findAll(option);
             res.status(200).json(getResearchAll);
         } catch (error) {

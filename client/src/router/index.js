@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
+import FormResearch from '../components/FormCreate.vue'
+import DetailResearch from '../components/DetailResearch.vue'
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +23,16 @@ const router = createRouter({
             path: "/register",
             name: "register",
             component: RegisterView,
+        },
+        {
+            path: "/addResearch",
+            name: "addResearch",
+            component: FormResearch,
+        },
+        {
+            path: "/detailResearch/:researchId",
+            name: "detailResearch",
+            component: DetailResearch,
         },
     ],
 });

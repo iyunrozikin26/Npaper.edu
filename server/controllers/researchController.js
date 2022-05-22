@@ -1,16 +1,16 @@
-const { Research, Category, User } = require("../models");
+const { Research, Category, User, Profile } = require("../models");
 
 class Controller {
     static async postResearch(req, res, next) {
         // console.log(req.body);
         try {
-            const { title, abstract, year, document, location, status, CategoryId } = req.body;
+            const { title, abstract, status, year, location, CategoryId } = req.body;
             const userId = req.user.id;
             const newResearch = {
                 title,
                 abstract,
                 year,
-                document,
+                document: req.file.filename,
                 location,
                 status,
                 CategoryId,
@@ -30,7 +30,10 @@ class Controller {
         try {
             // FILTER
             // PAGINATION
-            const getResearchAll = await Research.findAll();
+            const option = {
+                include: [Category, { model: User, include: Profile }],
+            };
+            const getResearchAll = await Research.findAll(option);
             res.status(200).json(getResearchAll);
         } catch (error) {
             console.log(error);

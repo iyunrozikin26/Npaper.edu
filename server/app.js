@@ -12,10 +12,11 @@ const categoryRouter = require("./routes/categoryRoutes");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(express.static("upload"));
 
 app.use("/users", userRouter);
 app.use("/research", researchRouter);
-app.use('/categories', categoryRouter )
+app.use("/categories", categoryRouter);
 
 app.listen(port, () => {
     console.log(`app listening on http://localhost:${port}`);

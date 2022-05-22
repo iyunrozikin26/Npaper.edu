@@ -13,6 +13,9 @@
                             <a class="nav-link active" aria-current="page" href="#" v-if="access_token" @click.prevent="toHome">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#" v-if="access_token" @click.prevent="toCreate">Create</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#" v-if="access_token" @click.prevent="toLogOut">LogOut</a>
                             <!-- <a class="nav-link" href="#" @click.prevent="toLogOut">LogOut</a> -->
                         </li>
@@ -37,8 +40,10 @@
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
+
 import { userStore } from "../stores/user";
 import { mapActions, mapState } from "pinia";
+
 export default {
     name: "NavBar",
     components: {
@@ -59,6 +64,9 @@ export default {
         },
         toLogOut() {
             this.logOut();
+        },
+        toCreate() {
+            this.$router.push("/addResearch");
         },
     },
 };
